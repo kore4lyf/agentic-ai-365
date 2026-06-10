@@ -1,0 +1,11 @@
+Agentic AI is a style of AI system design where the model can reason, choose actions, use tools, and work toward completing a goal.
+
+A chatbot usually responds to one prompt at a time. An agent can take multiple steps, use tools, and adapt its next action based on results.
+
+The ReAct loop stands for Think, Act, Observe. It is a common pattern for agent behavior.
+
+Tools extend the capability of an agent. Examples include APIs, calculators, databases, search systems, and code execution.
+
+Memory allows an agent to use prior context. Short-term memory keeps track of the current conversation. Long-term memory stores useful knowledge that can be retrieved later.
+
+Good agent design usually includes a system prompt, tool definitions, output structure, and memory or retrieval.
