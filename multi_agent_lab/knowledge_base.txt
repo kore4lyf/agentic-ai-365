@@ -1,0 +1,27 @@
+Agentic AI refers to AI systems that can reason, act, use tools, and pursue goals across multiple steps.
+
+A chatbot usually responds to one prompt at a time. An agent can handle multi-step tasks and adapt based on results.
+
+Single-agent systems work well for narrow tasks, but often struggle with complexity, context overload, and too many responsibilities.
+
+Multi-agent systems divide work across specialized roles. This improves quality, reliability, and scalability.
+
+A research agent is responsible for gathering relevant information, facts, and source material.
+
+An analysis agent interprets findings, identifies patterns, and produces key insights.
+
+A writer agent transforms insights into clear, structured communication.
+
+A reviewer agent evaluates quality, finds gaps, and improves the final output.
+
+Planner–Executor, Researcher–Writer, Critic–Improver, and Supervisor–Worker are common multi-agent design patterns.
+
+Orchestration is the control layer that manages task flow, state, and coordination between agents.
+
+Shared memory supports collaboration across agents. Private memory supports focus and specialization.
+
+Context overload happens when too much irrelevant information is passed into a model, reducing quality.
+
+Good multi-agent systems use task decomposition, role assignment, communication structure, and state passing.
+
+Production-grade systems also require evaluation, observability, and guardrails.
