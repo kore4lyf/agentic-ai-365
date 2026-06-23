@@ -84,12 +84,33 @@ function searchKnowledge(query, chunks, topK = 2) {
 
 // ── Tools ────────────────────────────────────────────────────────────────
 
+const TOOLS = [
+  {
+    type: "function",
+    function: {
+      name: "calculate",
+      description: "Evaluate a math expression. Supports +, -, *, /, %, **, parentheses.",
+      parameters: {
+        type: "object",
+        properties: {
+          expression: {
+            type: "string",
+            description: "The math expression to evaluate, e.g. '(3 + 5) * 2'"
+          }
+        },
+        required: ["expression"]
+      }
+    }
+  }
+];
+
+const TOOL_MAP = {
+  calculate
+};
+
 function calculate(expression) {
   try {
-    // Clean the expression
     const cleaned = expression.replace(/[^\d\s+\-*/(). %^sqrt]/g, '').replace(/\^/g, '**');
-    
-    // Safe evaluation (very basic)
     const result = Function('"use strict"; return (' + cleaned + ')')();
     return `Calculator result: ${result}`;
   } catch (e) {
@@ -162,10 +183,35 @@ Answer using the memory when relevant. If the user asks for math, calculate it a
     }
   ];
 
-  // Step 3: Send to JAN (NO TOOLS)
-  const response = await chat(messages, null);
+  // Step 3: Send to JAN with tools
+  let response = await chat(messages, TOOLS);
+  let message = response.choices[0].message;
 
-  // Step 4: Return the answer
+  // Step 4: Handle tool calls
+  while (message.tool_calls && message.tool_calls.length > 0) {
+    messages.push(message);
+
+    for (const toolCall of message.tool_calls) {
+      const fnName = toolCall.function.name;
+      const fnArgs = JSON.parse(toolCall.function.arguments);
+      console.log(`[TOOL] Calling ${fnName}(${JSON.stringify(fnArgs)})`);
+
+      const fn = TOOL_MAP[fnName];
+      const result = fn ? fn(fnArgs.expression) : `Unknown tool: ${fnName}`;
+      console.log(`[TOOL] Result: ${result}`);
+
+      messages.push({
+        role: "tool",
+        tool_call_id: toolCall.id,
+        content: result
+      });
+    }
+
+    response = await chat(messages, TOOLS);
+    message = response.choices[0].message;
+  }
+
+  // Step 5: Return the answer
   return getText(response);
 }
 
