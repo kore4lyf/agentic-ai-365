@@ -71,3 +71,30 @@ agentic-ai-intro/
     ├── knowledge_base.txt
     └── requirements.txt
 ```
+
+## Improvement Notes
+
+Based on the Hands-On Lab (Module 12) and production best practices, here are the recommended upgrades for each project:
+
+### All Projects
+- **Better retrieval**: Replace keyword/cosine similarity with vector-based retrieval using FAISS or Chroma
+- **Real orchestration frameworks**: Rebuild using LangGraph, CrewAI, or AutoGen for production-grade workflows
+- **Observability**: Log agent inputs, outputs, latency, and failures for debugging and monitoring
+
+### Advanced Research Agent
+- Add tool usage (web search, file reader, database query)
+- Add a Supervisor agent to dynamically decide workflow execution plans
+- Implement branching logic (e.g., skip Reviewer for simple topics)
+- Add guardrails for output validation
+
+### Customer Support Agent
+- Replace mock order data with a real database/API integration
+- Add persistent conversation memory across sessions
+- Implement rate limiting and retry logic for LLM calls
+- Add human-in-the-loop escalation with notification system
+
+### Simple Research Agents (JS & Py)
+- Add memory persistence across turns (session storage)
+- Support multiple tools beyond calculator (web search, file I/O)
+- Add error recovery and retry logic for failed LLM calls
+- Implement streaming responses for better UX
